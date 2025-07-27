@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>password</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="password-checker">
+        <h1>Password Strength Checker</h1>
+        <div class="character-container">
+            <div class="character" id="character"></div>
+            <div class="strength-text" id="strengthText">Enter password</div>
+        </div>
+        <div class="password-input">
+            <input type="password" id="passwordInput" placeholder="Введите пароль">
+            <button id="toggleVisibility">👁️</button>
+        </div>
+        <div class="requirements">
+            <p>Password must contain:</p>
+            <ul>
+                <li id="lengthReq">At least 8 characters</li>
+                <li id="numberReq">At least one number</li>
+                <li id="upperReq">At least one uppercase letter</li>
+                <li id="specialReq">At least one special character (e.g., !, @, #, $)</li>
+            </ul>
+        </div>
+    </div>
+    <script src="index.js"></script>
+</body>
+</html>

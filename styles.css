@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    background-color: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.password-checker {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+}
+
+.password-checker h1 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.password-checker .character-container {
+    margin-bottom: 30px;
+}
+
+.password-checker .character {
+    width: 150px;
+    height: 200px;
+    margin: 0 auto 10px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: all 0.3s ease;
+}
+
+.password-checker .strength-text {
+    font-size: 18px;
+    font-weight: bold;
+    color: #666;
+}
+
+.password-checker .password-input {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.password-checker .password-input input {
+    flex: 1;
+    padding: 12px 15px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+.password-checker .password-input input:focus {
+    outline: none;
+    border-color: #4a90e2;
+}
+
+.password-checker .password-input button {
+    background: none;
+    border: none;
+    margin-left: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    padding: 0 10px;
+}
+
+.password-checker .requirements {
+    text-align: left;
+    color: #666;
+}
+
+.password-checker .requirements p {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.password-checker .requirements ul {
+    list-style-type: none;
+}
+
+.password-checker .requirements ul li {
+    margin-bottom: 5px;
+    position: relative;
+    padding-left: 25px;
+}
+
+.password-checker .requirements ul li:before {
+    content: "✖";
+    position: absolute;
+    left: 0;
+    color: #e74c3c;
+}
+
+.password-checker .requirements ul li.valid:before {
+    content: "✓";
+    color: #2ecc71;
+}
+
+.weak .strength-text {
+    color: #e74c3c;
+}
+
+.weak .character {
+    background-image: url('images/weak.png');
+}
+
+.medium .strength-text {
+    color: #f39c12;
+}
+
+.medium .character {
+    background-image: url('images/norm.png');
+}
+
+.strong .strength-text {
+    color: #2ecc71;
+}
+
+.strong .character {
+    background-image: url('images/strong.png');
+}
