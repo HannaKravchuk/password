@@ -1,9 +1,10 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const passwordInput = document.getElementById('passwordInput');
     const toggleVisibility = document.getElementById('toggleVisibility');
     const characterContainer = document.getElementById('character');
     const strengthText = document.getElementById('strengthText');
     const strengthFill = document.getElementById('strengthFill');
+    const themeSwitcher = document.getElementById('themeSwitcher');
 
     const lengthReq = document.getElementById('lengthReq');
     const numberReq = document.getElementById('numberReq');
@@ -12,17 +13,34 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const passwordChecker = document.querySelector('.password-checker');
 
+    // Тема
+    if (localStorage.getItem('theme') === 'dark' ||
+        (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.body.classList.add('dark');
+        if (themeSwitcher) themeSwitcher.checked = true;
+    }
+
+    if (themeSwitcher) {
+        themeSwitcher.addEventListener('change', function () {
+            document.body.classList.toggle('dark');
+            localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+        });
+    }
+
+    // Показать/скрыть пароль
     let isVisible = false;
-    toggleVisibility.addEventListener('click', function() {
+    toggleVisibility.addEventListener('click', function () {
         isVisible = !isVisible;
         passwordInput.type = isVisible ? 'text' : 'password';
         toggleVisibility.textContent = isVisible ? '🙈' : '👁️';
     });
 
-    passwordInput.addEventListener('input', function() {
+    // Проверка пароля
+    passwordInput.addEventListener('input', function () {
         const password = passwordInput.value;
         const strength = checkPasswordStrength(password);
 
+        // Анимация персонажа
         characterContainer.style.opacity = 0;
         characterContainer.style.transform = 'translateY(20px)';
         setTimeout(() => {
