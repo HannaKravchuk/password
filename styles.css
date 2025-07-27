@@ -8,7 +8,7 @@
 }
 
 body {
-    background-color: #f5f5f5;
+    background: linear-gradient(135deg, #e0f7fa, #ffffff);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -17,104 +17,176 @@ body {
 }
 
 .password-checker {
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    padding: 30px;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    padding: 40px 30px;
+    max-width: 500px;
     width: 100%;
-    max-width: 450px;
     text-align: center;
+    animation: fadeIn 0.5s ease forwards;
 }
 
-.password-checker h1 {
-    margin-bottom: 20px;
-    color: #333;
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
-.password-checker .character-container {
-    margin-bottom: 30px;
+.password-checker > * {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.5s forwards;
 }
 
-.password-checker .character {
-    width: 150px;
-    height: 200px;
-    margin: 0 auto 10px;
+.password-checker > *:nth-child(1) { animation-delay: 0.1s; }
+.password-checker > *:nth-child(2) { animation-delay: 0.2s; }
+.password-checker > *:nth-child(3) { animation-delay: 0.3s; }
+.password-checker > *:nth-child(4) { animation-delay: 0.4s; }
+.password-checker > *:nth-child(5) { animation-delay: 0.5s; }
+
+@keyframes fadeUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.character-container {
+    margin-bottom: 25px;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.character {
+    width: 100%;
+    aspect-ratio: 3 / 4;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
-.password-checker .strength-text {
+.weak .character,
+.medium .character,
+.strong .character {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.strength-text {
     font-size: 18px;
     font-weight: bold;
-    color: #666;
+    margin-top: 10px;
+    color: #7f8c8d;
+    transition: color 0.3s ease;
 }
 
-.password-checker .password-input {
-    display: flex;
+.strength-bar {
+    height: 10px;
+    width: 100%;
+    background: #eee;
+    border-radius: 20px;
     margin-bottom: 20px;
+    overflow: hidden;
 }
 
-.password-checker .password-input input {
+#strengthFill {
+    height: 100%;
+    width: 0;
+    transition: width 0.3s ease, background-color 0.3s ease;
+    border-radius: 20px;
+}
+
+.password-input {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 10px;
+}
+
+.password-input input {
     flex: 1;
-    padding: 12px 15px;
-    border: 2px solid #ddd;
-    border-radius: 5px;
+    padding: 14px 16px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
     font-size: 16px;
-    transition: border-color 0.3s;
+    transition: border-color 0.3s, background-color 0.3s;
 }
 
-.password-checker .password-input input:focus {
+.password-input input:hover {
+    border-color: #3498db;
+    background-color: #f0faff;
+}
+
+.password-input input:focus {
+    border-color: #3498db;
     outline: none;
-    border-color: #4a90e2;
 }
 
-.password-checker .password-input button {
-    background: none;
+.password-input button {
+    font-size: 22px;
+    background-color: #ecf0f1;
     border: none;
-    margin-left: 10px;
+    border-radius: 8px;
+    padding: 10px 12px;
     cursor: pointer;
-    font-size: 20px;
-    padding: 0 10px;
+    transition: background-color 0.3s, color 0.3s;
 }
 
-.password-checker .requirements {
+.password-input button:hover {
+    background-color: #3498db;
+    color: white;
+}
+
+.requirements {
     text-align: left;
-    color: #666;
+    color: #444;
 }
 
-.password-checker .requirements p {
+.requirements p {
     font-weight: bold;
     margin-bottom: 10px;
+    font-size: 16px;
 }
 
-.password-checker .requirements ul {
+.requirements ul {
     list-style-type: none;
+    padding-left: 0;
 }
 
-.password-checker .requirements ul li {
-    margin-bottom: 5px;
+.requirements ul li {
+    margin-bottom: 8px;
     position: relative;
-    padding-left: 25px;
+    padding-left: 28px;
+    font-size: 15px;
 }
 
-.password-checker .requirements ul li:before {
-    content: "✖";
+.requirements ul li:before {
+    content: "⛔";
     position: absolute;
     left: 0;
     color: #e74c3c;
 }
 
-.password-checker .requirements ul li.valid:before {
-    content: "✓";
+.requirements ul li.valid:before {
+    content: "✅";
     color: #2ecc71;
 }
 
+/* Strength colors */
 .weak .strength-text {
     color: #e74c3c;
 }
-
 .weak .character {
     background-image: url('images/weak.png');
 }
@@ -122,7 +194,6 @@ body {
 .medium .strength-text {
     color: #f39c12;
 }
-
 .medium .character {
     background-image: url('images/norm.png');
 }
@@ -130,7 +201,6 @@ body {
 .strong .strength-text {
     color: #2ecc71;
 }
-
 .strong .character {
     background-image: url('images/strong.png');
 }

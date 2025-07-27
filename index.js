@@ -3,12 +3,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const toggleVisibility = document.getElementById('toggleVisibility');
     const characterContainer = document.getElementById('character');
     const strengthText = document.getElementById('strengthText');
-    const passwordChecker = document.querySelector('.password-checker');
+    const strengthFill = document.getElementById('strengthFill');
 
     const lengthReq = document.getElementById('lengthReq');
     const numberReq = document.getElementById('numberReq');
     const upperReq = document.getElementById('upperReq');
     const specialReq = document.getElementById('specialReq');
+
+    const passwordChecker = document.querySelector('.password-checker');
 
     let isVisible = false;
     toggleVisibility.addEventListener('click', function() {
@@ -16,72 +18,64 @@ document.addEventListener('DOMContentLoaded', function() {
         passwordInput.type = isVisible ? 'text' : 'password';
         toggleVisibility.textContent = isVisible ? '🙈' : '👁️';
     });
-    
+
     passwordInput.addEventListener('input', function() {
         const password = passwordInput.value;
         const strength = checkPasswordStrength(password);
 
+        characterContainer.style.opacity = 0;
+        characterContainer.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+            characterContainer.style.opacity = 1;
+            characterContainer.style.transform = 'translateY(0)';
+        }, 50);
+
         passwordChecker.classList.remove('weak', 'medium', 'strong');
-        
+
         if (password.length === 0) {
             strengthText.textContent = 'Enter password';
+            strengthFill.style.width = '0';
             return;
         }
-        
+
         if (strength === 'weak') {
             passwordChecker.classList.add('weak');
             strengthText.textContent = 'Weak password';
+            strengthFill.style.width = '33%';
+            strengthFill.style.backgroundColor = '#e74c3c';
         } else if (strength === 'medium') {
             passwordChecker.classList.add('medium');
             strengthText.textContent = 'Medium password';
+            strengthFill.style.width = '66%';
+            strengthFill.style.backgroundColor = '#f39c12';
         } else {
             passwordChecker.classList.add('strong');
             strengthText.textContent = 'Strong password';
+            strengthFill.style.width = '100%';
+            strengthFill.style.backgroundColor = '#2ecc71';
         }
 
         updateRequirements(password);
     });
-    
+
     function checkPasswordStrength(password) {
         let strength = 0;
-        
+
         if (password.length >= 8) strength++;
         if (password.length >= 12) strength++;
-        
         if (/\d/.test(password)) strength++;
-
         if (/[A-ZА-Я]/.test(password)) strength++;
-
         if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) strength++;
 
         if (strength <= 2) return 'weak';
         if (strength <= 4) return 'medium';
         return 'strong';
     }
-    
-    function updateRequirements(password) {
-        if (password.length >= 8) {
-            lengthReq.classList.add('valid');
-        } else {
-            lengthReq.classList.remove('valid');
-        }
-        
-        if (/\d/.test(password)) {
-            numberReq.classList.add('valid');
-        } else {
-            numberReq.classList.remove('valid');
-        }
 
-        if (/[A-ZА-Я]/.test(password)) {
-            upperReq.classList.add('valid');
-        } else {
-            upperReq.classList.remove('valid');
-        }
-        
-        if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
-            specialReq.classList.add('valid');
-        } else {
-            specialReq.classList.remove('valid');
-        }
+    function updateRequirements(password) {
+        lengthReq.classList.toggle('valid', password.length >= 8);
+        numberReq.classList.toggle('valid', /\d/.test(password));
+        upperReq.classList.toggle('valid', /[A-ZА-Я]/.test(password));
+        specialReq.classList.toggle('valid', /[!@#$%^&*(),.?":{}|<>]/.test(password));
     }
 });
