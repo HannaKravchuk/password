@@ -286,3 +286,53 @@ input:checked + .slider:before {
 .strong .character {
     background-image: url('images/strong.png');
 }
+
+/* ======== MOBILE ADAPTATION ======== */
+@media (max-width: 600px) {
+    .password-checker {
+        padding: 25px 20px;
+        border-radius: 16px;
+    }
+
+    .password-checker h1 {
+        font-size: 20px;
+    }
+
+    .character {
+        aspect-ratio: 3 / 5;
+    }
+
+    .strength-text {
+        font-size: 16px;
+    }
+
+    .password-input {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .password-input input {
+        width: 100%;
+        font-size: 15px;
+    }
+
+    .password-input button {
+        align-self: flex-end;
+        font-size: 18px;
+        padding: 8px 10px;
+    }
+
+    .requirements p {
+        font-size: 14px;
+    }
+
+    .requirements ul li {
+        font-size: 14px;
+    }
+
+    .theme-toggle {
+        top: 10px;
+        right: 10px;
+        transform: scale(0.9);
+    }
+}
